@@ -54,7 +54,24 @@
         </div>
         <div class="form-group">
           <label>Valor (R$):</label>
-          <input type="number" id="servico" value="30" />
+          <input type="number" id="servico" value="" />
+        </div>
+        <div class="form-group">
+          <label>Forma de Pagamento:</label>
+          <select
+            id="formaPagamento"
+            style="
+              width: 100%;
+              padding: 10px;
+              border-radius: 8px;
+              border: 1px solid #ddd;
+              margin-top: 5px;
+            "
+          >
+            <option value="Dinheiro">Dinheiro 💵</option>
+            <option value="Pix">Pix ⚡</option>
+            <option value="Cartão">Cartão 💳</option>
+          </select>
         </div>
         <div class="modal-buttons">
           <button class="btn-save" onclick="salvar()">Confirmar</button>

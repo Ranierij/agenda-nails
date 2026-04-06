@@ -87,22 +87,116 @@ function abrirModal(hora, prof) {
 
 function fechar() { document.getElementById("modal").classList.add("hidden"); }
 
+// Atualize a função salvar
 function salvar() {
     const nome = document.getElementById("nome").value;
-    if (!nome) return alert("Digite o nome!");
-    agenda.push({ nome, ...window.tempAgendamento, data: formatarData(semanaAtual), valor: document.getElementById("servico").value });
+    const valor = document.getElementById("servico").value;
+    const forma = document.getElementById("formaPagamento").value;
+
+    if (!nome) return alert("Digite o nome da cliente!");
+
+    // Adicionamos 'forma' e 'valor' ao objeto salvo
+    agenda.push({
+        nome,
+        ...window.tempAgendamento,
+        data: formatarData(semanaAtual),
+        valor: parseFloat(valor),
+        forma: forma
+    });
+
     localStorage.setItem("agenda", JSON.stringify(agenda));
+
+    // Limpar campo nome para o próximo uso
+    document.getElementById("nome").value = "";
     fechar();
     renderAgenda();
 }
 
-function mudarData(dias) {
-    semanaAtual.setDate(semanaAtual.getDate() + dias);
-    renderAgenda();
-}
+// Dentro da sua função renderAgenda(), localize onde o slot é criado e mude esta linha:
+// slot.innerHTML = ag ? `<strong>${ag.nome}</strong><span style="font-size:11px;">R$ ${ag.valor} (${ag.forma})</span>` : "Disponível";
 
 window.onload = () => {
     renderAgenda();
+    const inputData = document.getElementById('inputData');
+    if (inputData) {
+        inputData.addEventListener('change', (e) => {
+            semanaAtual = new Date(e.target.value + "T00:00:00");
+            renderAgenda();
+        });
+    }
+};
+
+function renderClientes() {
+    const container = document.getElementById("listaClientes");
+    if (!container) return; // Só executa se estiver na página clientes.html
+
+    container.innerHTML = "";
+
+    // Pegar nomes únicos de clientes da agenda
+    const nomesClientes = [...new Set(agenda.map(a => a.nome))];
+
+    if (nomesClientes.length === 0) {
+        container.innerHTML = "<p>Nenhum cliente cadastrado ainda.</p>";
+        return;
+    }
+
+    nomesClientes.forEach(nome => {
+        const totalGasto = agenda
+            .filter(a => a.nome === nome)
+            .reduce((sum, item) => sum + Number(item.valor), 0);
+
+        const card = document.createElement("div");
+        card.className = "glass-card"; // Reutilizando seu estilo de vidro
+        card.style.color = "#333";
+        card.style.margin = "10px";
+        card.style.textAlign = "left";
+        card.style.padding = "20px";
+        card.style.background = "white";
+
+        card.innerHTML = `
+            <h3 style="color: #6b2c91;">👤 ${nome}</h3>
+            <p><strong>Total Investido:</strong> R$ ${totalGasto.toFixed(2)}</p>
+            <p style="font-size: 12px; color: #666;">Cliente frequente</p>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// Função para rodar apenas na página de faturamento
+function renderFaturamento() {
+    const inputDataFat = document.getElementById("data");
+    if (!inputDataFat) return; // Só executa se estiver na faturamento.html
+
+    // Ao mudar a data no calendário da página de faturamento
+    inputDataFat.addEventListener("change", (e) => {
+        const dataBusca = e.target.value;
+        const filtrados = agenda.filter(a => a.data === dataBusca);
+
+        let tGeral = 0, tPix = 0, tDinheiro = 0, tCartao = 0;
+
+        filtrados.forEach(item => {
+            const v = Number(item.valor);
+            tGeral += v;
+            if (item.forma === "Pix") tPix += v;
+            if (item.forma === "Dinheiro") tDinheiro += v;
+            if (item.forma === "Cartão") tCartao += v;
+        });
+
+        // Atualiza os textos na tela
+        document.getElementById("total").innerHTML = `<strong>Total do Dia:</strong> R$ ${tGeral.toFixed(2)}`;
+        document.getElementById("pix").innerText = `Pix: R$ ${tPix.toFixed(2)}`;
+        document.getElementById("dinheiro").innerText = `Dinheiro: R$ ${tDinheiro.toFixed(2)}`;
+        document.getElementById("cartao").innerText = `Cartão: R$ ${tCartao.toFixed(2)}`;
+    });
+}
+
+// --- ATUALIZAÇÃO DO WINDOW.ONLOAD ---
+window.onload = () => {
+    renderAgenda();      // Tenta carregar agenda (index)
+    renderClientes();    // Tenta carregar clientes (clientes)
+    renderFaturamento(); // Tenta carregar faturamento (faturamento)
+
+    // Lógica do input de data da Agenda (index)
     const inputData = document.getElementById('inputData');
     if (inputData) {
         inputData.addEventListener('change', (e) => {
