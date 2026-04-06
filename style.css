@@ -19,12 +19,12 @@ body {
   justify-content: center;
   align-items: center;
   /* Gradiente moderno e fundo */
-  background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%);
+  background: linear-gradient(135deg, #0fb227 0%, #4c1d95 100%);
   margin: 0;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(37, 190, 44, 0.1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
