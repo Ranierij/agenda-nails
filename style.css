@@ -320,6 +320,59 @@ body {
   transition: 0.2s;
 }
 
-/* No JavaScript, a altura da .hora foi definida como 93px 
-   porque: 85px (slot) + 8px (margin-bottom) = 93px. 
-   Assim o alinhamento fica perfeito! */
+/* --- RESPONSIVIDADE (PARA CELULARES) --- */
+@media (max-width: 768px) {
+  /* 1. Ajusta o Topbar para não ocupar muito espaço */
+  .topbar h2 {
+    font-size: 18px;
+  }
+
+  /* 2. O Segredo: Muda o Grid de Lado para Baixo */
+  .agenda-grid {
+    display: block; /* Remove o grid de duas colunas (hora | agenda) */
+    padding: 10px;
+  }
+
+  /* 3. Esconde a coluna de horas fixa e coloca a hora dentro do slot */
+  .horarios {
+    display: none; /* Esconde a coluna da esquerda no celular */
+  }
+
+  .colunas {
+    display: flex;
+    flex-direction: column; /* Coloca Ana, depois Bruna, depois Carla */
+    gap: 30px;
+  }
+
+  .profissional {
+    width: 100%;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 20px;
+  }
+
+  /* 4. Ajusta os cards (slots) para caberem no dedo */
+  .slot {
+    height: auto;
+    min-height: 70px;
+    padding: 15px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  /* 5. Ajusta a Sidebar para ocupar quase a tela toda no celular */
+  .sidebar {
+    width: 85%;
+  }
+
+  /* 6. Centraliza melhor a data e as setas */
+  .calendar-header {
+    gap: 10px;
+  }
+  #semanaAtual {
+    font-size: 18px;
+  }
+  .nav-btn {
+    width: 35px;
+    height: 35px;
+  }
+}

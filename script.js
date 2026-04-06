@@ -205,3 +205,8 @@ window.onload = () => {
         });
     }
 };
+
+// No celular, a hora aparece acima do nome do cliente
+slot.innerHTML = ag
+    ? `<span style="font-size:10px; color:#666;">${hora}</span><strong>${ag.nome}</strong><span>R$ ${ag.valor}</span>`
+    : `<span style="font-size:10px; color:#aaa;">${hora}</span><span>Disponível</span>`;
