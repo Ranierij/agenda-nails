@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Agenda Nails</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="login-page">
+    <div class="login-container">
+      <div class="glass-card">
+        <div class="login-header">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1001/1001371.png"
+            alt="Logo"
+            class="login-logo"
+          />
+          <h1>Agenda Nails</h1>
+          <p>Gerencie seus agendamentos com estilo</p>
+        </div>
+        <form id="loginForm" class="login-form">
+          <div class="input-group">
+            <input type="text" id="usuario" placeholder="Usuário" required />
+          </div>
+          <div class="input-group pass-group">
+            <input type="password" id="senha" placeholder="Senha" required />
+            <span class="toggle-pass" onclick="toggleSenha()">👁️</span>
+          </div>
+          <button type="submit" class="btn-login">Entrar</button>
+        </form>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      function toggleSenha() {
+        const input = document.getElementById("senha");
+        input.type = input.type === "password" ? "text" : "password";
+      }
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        localStorage.setItem("logado", "true");
+        window.location.href = "index.html";
+      });
+    </script>
+  </body>
+</html>

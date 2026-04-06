@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Clientes - Agenda Nails</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <h2>Clientes</h2>
+    </div>
+
+    <div id="sidebar" class="sidebar hidden-sidebar">
+      <button class="close-sidebar" onclick="toggleMenu()">✕</button>
+      <a href="index.html">📅 Agenda</a>
+      <a href="clientes.html">👤 Clientes</a>
+      <a href="faturamento.html">💰 Faturamento</a>
+      <hr />
+      <button onclick="logout()" class="logout-btn side-link">🚪 Sair</button>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+
+    <div class="content">
+      <h1>Lista de Clientes</h1>
+      <div id="listaClientes" class="grid"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

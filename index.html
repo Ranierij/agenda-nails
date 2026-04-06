@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda Nails - Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <h2>Agenda Nails</h2>
+    </div>
+
+    <div id="sidebar" class="sidebar hidden-sidebar">
+      <button class="close-sidebar" onclick="toggleMenu()">✕</button>
+      <a href="index.html">📅 Agenda</a>
+      <a href="clientes.html">👤 Clientes</a>
+      <a href="faturamento.html">💰 Faturamento</a>
+      <hr />
+      <button onclick="logout()" class="logout-btn side-link">🚪 Sair</button>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+
+    <div class="content">
+      <h1>Controle de Agendamentos</h1>
+      <div class="calendar-header">
+        <button class="nav-btn" onclick="mudarData(-1)">◀</button>
+
+        <div
+          class="date-picker-wrapper"
+          onclick="document.getElementById('inputData').showPicker()"
+        >
+          <h3 id="semanaAtual"></h3>
+          <input type="date" id="inputData" />
+        </div>
+
+        <button class="nav-btn" onclick="mudarData(1)">▶</button>
+      </div>
+
+      <div class="agenda-grid">
+        <div class="horarios" id="horarios"></div>
+        <div class="colunas" id="colunas"></div>
+      </div>
+    </div>
+
+    <div id="modal" class="modal hidden">
+      <div class="modal-box">
+        <h3 id="tituloModal">Novo Agendamento</h3>
+        <div class="form-group">
+          <label>Cliente:</label>
+          <input id="nome" placeholder="Nome da cliente" />
+        </div>
+        <div class="form-group">
+          <label>Valor (R$):</label>
+          <input type="number" id="servico" value="30" />
+        </div>
+        <div class="modal-buttons">
+          <button class="btn-save" onclick="salvar()">Confirmar</button>
+          <button class="btn-cancel" onclick="fechar()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
